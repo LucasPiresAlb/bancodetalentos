@@ -5,6 +5,23 @@ app.use(express.static('.'));
 app.use(bodyParser.json());
 
 let servicos = [];
+
+// API endpoints
+app.post('/api/servicos', (req, res) => {
+  const servico = req.body;
+  servicos.push(servico);
+  res.status(201).json({ message: 'Serviço cadastrado com sucesso' });
+});
+
+app.get('/api/servicos/busca', (req, res) => {
+  const termo = req.query.q?.toLowerCase() || '';
+  const resultados = servicos.filter(servico => 
+    servico.nome.toLowerCase().includes(termo) ||
+    servico.categoria.toLowerCase().includes(termo) ||
+    servico.descricao.toLowerCase().includes(termo)
+  );
+  res.json(resultados);
+});
 let solicitacoes = [];
 
 // Rota para listar serviços
