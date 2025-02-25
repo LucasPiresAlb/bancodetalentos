@@ -1,3 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Your custom styles below */
+.container {
+  margin: 0 auto;
+  max-width: 1200px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 400px;
+}
+
 body {
   font-family: sans-serif;
   display: flex;
@@ -7,14 +22,6 @@ body {
   min-height: 100vh;
   background-color: #f4f4f4;
   padding: 20px;
-}
-
-.container {
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  width: 400px;
 }
 
 h1 {
