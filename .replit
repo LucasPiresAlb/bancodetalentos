@@ -16,3 +16,6 @@ args = "node backend/server.js"
 [[ports]]
 localPort = 3000
 externalPort = 80
+
+[deployment]
+run = ["sh", "-c", "node backend/server.js"]
