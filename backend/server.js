@@ -1,6 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const Parse = require('parse/node');
 const app = express();
+
+// Initialize Parse
+Parse.initialize("YOUR_APP_ID", "YOUR_JAVASCRIPT_KEY");
+Parse.serverURL = 'https://YOUR_PARSE_SERVER_URL/parse';
 app.use(express.static('.'));
 app.use(bodyParser.json());
 
