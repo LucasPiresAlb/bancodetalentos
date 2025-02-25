@@ -1,0 +1,60 @@
+ Cadastro de Serviço
+    </h2>
+    <form>
+     <div class="mb-4">
+      <label class="block text-gray-700" for="service-name">
+       Nome do Serviço
+      </label>
+      <input class="w-full p-2 border border-gray-300 rounded" id="service-name" placeholder="Digite o nome do serviço" type="text"/>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700" for="service-category">
+       Categoria
+      </label>
+      <select class="w-full p-2 border border-gray-300 rounded" id="service-category">
+       <option>
+        Jardinagem
+       </option>
+       <option>
+        Conserto de Eletrodomésticos
+       </option>
+       <option>
+        Aulas Particulares
+       </option>
+      </select>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700" for="service-description">
+       Descrição
+      </label>
+      <textarea class="w-full p-2 border border-gray-300 rounded" id="service-description" placeholder="Descreva o serviço"></textarea>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700" for="service-price">
+       Preço
+      </label>
+      <input class="w-full p-2 border border-gray-300 rounded" id="service-price" placeholder="Digite o preço do serviço" type="text"/>
+     </div>
+     <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">
+      Cadastrar Serviço
+     </button>
+    </form>
+   </section>
+   <section class="bg-white p-6 rounded shadow-md mb-6">
+    <h2 class="text-xl font-bold mb-4">
+     Buscar Serviços
+    </h2>
+    <form>
+     <div class="mb-4">
+      <label class="block text-gray-700" for="search">
+       Buscar
+      </label>
+      <input class="w-full p-2 border border-gray-300 rounded" id="search" placeholder="Digite o nome do serviço ou categoria" type="text"/>
+     </div>
+     <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">
+      Buscar
+     </button>
+    </form>
+   </section>
+   <section class="bg-white p-6 rounded shadow-md">
+    <h2 class="text-xl font-bold mb-4">
