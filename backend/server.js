@@ -4,7 +4,7 @@ const Parse = require('parse/node');
 const app = express();
 
 // Initialize Parse - Substitua com suas credenciais do Back4App
-Parse.initialize('SUA_APP_ID', 'SUA_JAVASCRIPT_KEY');
+Parse.initialize('y1aydULfPeuhAEvlKqX08hT0j0Dyh9Djk5V7XcFI', 'MHmss0hWDsA2XMnIr8PVczLQXGksbU9e76y7LqGC');
 Parse.serverURL = 'https://parseapi.back4app.com/';
 app.use(express.static('.'));
 app.use(bodyParser.json());
