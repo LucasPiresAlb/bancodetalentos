@@ -4,8 +4,8 @@ const Parse = require('parse/node');
 const app = express();
 
 // Initialize Parse
-Parse.initialize("YOUR_APP_ID", "YOUR_JAVASCRIPT_KEY");
-Parse.serverURL = 'https://YOUR_PARSE_SERVER_URL/parse';
+Parse.initialize('Bla1Fahz77xNKorxfqFnuIljp4OISFoFBQihbEUU', 'wQNgoICzd90CKGaCEzwG2dF33ePjYDiJbNxWo7lm');
+Parse.serverURL = 'mongodb://admin:pcjpGlsjCCZzMoWVEsFb74Hy@MongoS3601A.back4app.com:27017/2b5ef6e8c11b4d02baed0945ddb6dea2';
 app.use(express.static('.'));
 app.use(bodyParser.json());
 
