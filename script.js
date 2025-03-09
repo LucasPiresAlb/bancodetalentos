@@ -66,6 +66,35 @@ async function solicitarServico(servicoId) {
   }
 }
 
+// Função para cadastrar um usuário
+async function cadastrarUsuario(nome, email, telefone) {
+  try {
+    const resposta = await fetch('/usuarios', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome, email, telefone }),
+    });
+    
+    const resultado = await resposta.json();
+    return resultado;
+  } catch (error) {
+    console.error('Erro ao cadastrar usuário:', error);
+    throw error;
+  }
+}
+
+// Função para listar usuários
+async function listarUsuarios() {
+  try {
+    const resposta = await fetch('/usuarios');
+    const usuarios = await resposta.json();
+    return usuarios;
+  } catch (error) {
+    console.error('Erro ao listar usuários:', error);
+    throw error;
+  }
+}
+
 // Função para carregar serviços na página inicial
 async function carregarServicos() {
   try {

@@ -12,9 +12,10 @@ app.use(bodyParser.json());
 let servicos = [];
 
 // API endpoints
-// Definir classe de Serviço no Parse
+// Definir classes no Parse
 const Servico = Parse.Object.extend("Servico");
 const Solicitacao = Parse.Object.extend("Solicitacao");
+const Usuario = Parse.Object.extend("Usuario");
 
 // Rota para cadastrar um serviço usando Parse
 app.post('/api/servicos', async (req, res) => {
@@ -107,6 +108,31 @@ app.post('/solicitacoes', async (req, res) => {
     await solicitacao.save();
     
     res.json({ message: 'Serviço solicitado com sucesso!', id: solicitacao.id });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Rotas para Usuários
+app.post('/usuarios', async (req, res) => {
+  try {
+    const { nome, email, telefone } = req.body;
+    const usuario = new Usuario();
+    usuario.set('nome', nome);
+    usuario.set('email', email);
+    usuario.set('telefone', telefone);
+    await usuario.save();
+    res.json({ message: 'Usuário cadastrado com sucesso!', id: usuario.id });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/usuarios', async (req, res) => {
+  try {
+    const query = new Parse.Query(Usuario);
+    const usuarios = await query.find();
+    res.json(usuarios.map(usuario => usuario.toJSON()));
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
