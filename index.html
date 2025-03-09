@@ -17,19 +17,20 @@
          Serviços Comunitários
         </h1>
           <nav>
-           <ul class="flex space-x-4">
+           <ul class="flex space-x-4" id="navLinks">
             <li>
              <a class="hover:underline" href="index.html">
               Início
              </a>
             </li>
-             <li>
-                <a class="hover:underline" href="cadastrodeservicos.html">
-                 Cadastro de Serviços
-                </a>
             <li>
              <a class="hover:underline" href="servicos.html">
               Serviços
+             </a>
+            </li>
+            <li id="cadastroServicosLink" class="hidden">
+             <a class="hover:underline" href="cadastrodeservicos.html">
+              Cadastro de Serviços
              </a>
             </li>
             <li>
@@ -45,6 +46,11 @@
             <li>
              <a class="hover:underline" href="contato.html">
               Contato
+             </a>
+            </li>
+            <li id="loginLink">
+             <a class="hover:underline" href="login.html">
+              Login
              </a>
             </li>
            </ul>
@@ -72,5 +78,23 @@
     </p>
    </div>
   </footer>
+  <script src="auth.js"></script>
+  <script>
+    // Verifica login e atualiza a navegação
+    document.addEventListener('DOMContentLoaded', function() {
+      const cadastroServicosLink = document.getElementById('cadastroServicosLink');
+      const loginLink = document.getElementById('loginLink');
+      
+      if (verificarLogin()) {
+        // Mostrar link de cadastro de serviços e ocultar link de login
+        cadastroServicosLink.classList.remove('hidden');
+        loginLink.classList.add('hidden');
+      } else {
+        // Ocultar link de cadastro de serviços e mostrar link de login
+        cadastroServicosLink.classList.add('hidden');
+        loginLink.classList.remove('hidden');
+      }
+    });
+  </script>
  </body>
 </html>

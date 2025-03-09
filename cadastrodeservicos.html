@@ -99,6 +99,15 @@
     </p>
    </div>
   </footer>
+  <script src="auth.js"></script>
   <script src="script.js"></script>
+  <script>
+    // Proteger esta página
+    document.addEventListener('DOMContentLoaded', function() {
+      if (!verificarLogin()) {
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
  </body>
 </html>

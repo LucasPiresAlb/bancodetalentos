@@ -72,9 +72,20 @@
         <label for="telefone" class="block text-gray-700 font-semibold mb-2">Telefone</label>
         <input type="tel" id="telefone" name="telefone" class="w-full p-2 border border-gray-300 rounded" required>
       </div>
+      <div class="mb-4">
+        <label for="senha" class="block text-gray-700 font-semibold mb-2">Senha</label>
+        <input type="password" id="senha" name="senha" class="w-full p-2 border border-gray-300 rounded" required>
+      </div>
+      <div class="mb-4">
+        <label for="confirmSenha" class="block text-gray-700 font-semibold mb-2">Confirmar Senha</label>
+        <input type="password" id="confirmSenha" name="confirmSenha" class="w-full p-2 border border-gray-300 rounded" required>
+      </div>
       <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
         Cadastrar Usuário
       </button>
+      <div class="text-center mt-4">
+        <p>Já tem uma conta? <a href="login.html" class="text-blue-600 hover:underline">Faça login</a></p>
+      </div>
     </form>
    </section>
    <section class="bg-white p-6 rounded shadow-md">
@@ -94,6 +105,7 @@
    </div>
   </footer>
   <script src="script.js"></script>
+  <script src="auth.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const formCadastroUsuario = document.getElementById('formCadastroUsuario');
@@ -104,12 +116,41 @@
           const nome = document.getElementById('nome').value;
           const email = document.getElementById('email').value;
           const telefone = document.getElementById('telefone').value;
+          const senha = document.getElementById('senha').value;
+          const confirmSenha = document.getElementById('confirmSenha').value;
+          
+          // Verificar se as senhas coincidem
+          if (senha !== confirmSenha) {
+            alert('As senhas não coincidem!');
+            return;
+          }
           
           try {
-            const resultado = await cadastrarUsuario(nome, email, telefone);
-            alert(resultado.message);
+            // Salvar usuário no localStorage
+            const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+            
+            // Verificar se email já existe
+            if (usuarios.some(user => user.email === email)) {
+              alert('Este email já está cadastrado!');
+              return;
+            }
+            
+            // Adicionar novo usuário
+            const novoUsuario = { nome, email, telefone, senha };
+            usuarios.push(novoUsuario);
+            localStorage.setItem('usuarios', JSON.stringify(usuarios));
+            
+            // Cadastrar no backend também (opcional)
+            try {
+              const resultado = await cadastrarUsuario(nome, email, telefone);
+              console.log('Usuário também cadastrado no backend:', resultado);
+            } catch (error) {
+              console.error('Erro ao cadastrar no backend, mas usuário foi salvo localmente:', error);
+            }
+            
+            alert('Usuário cadastrado com sucesso!');
             formCadastroUsuario.reset();
-            carregarUsuarios();
+            window.location.href = 'login.html';
           } catch (error) {
             alert('Erro ao cadastrar usuário: ' + error.message);
           }
@@ -119,8 +160,22 @@
       // Função para carregar e exibir usuários
       async function carregarUsuarios() {
         const listaUsuarios = document.getElementById('listaUsuarios');
+        if (!listaUsuarios) return;
+        
+        // Verificar se o usuário está logado
+        if (!verificarLogin()) {
+          listaUsuarios.innerHTML = '<p class="text-red-500">Você precisa estar logado para ver esta lista.</p>';
+          return;
+        }
+        
         try {
-          const usuarios = await listarUsuarios();
+          // Obter usuários do localStorage (sem as senhas)
+          const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]')
+            .map(usuario => {
+              const { senha, ...usuarioSemSenha } = usuario;
+              return usuarioSemSenha;
+            });
+          
           if (usuarios.length === 0) {
             listaUsuarios.innerHTML = '<p>Nenhum usuário cadastrado ainda.</p>';
           } else {
