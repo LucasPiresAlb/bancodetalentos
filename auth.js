@@ -92,3 +92,57 @@ document.addEventListener('DOMContentLoaded', function() {
     header.appendChild(logoutContainer);
   }
 });
+async function cadastrarUsuario(nome, email, telefone) {
+  // Simulação de uma requisição ao backend
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ success: true });
+    }, 1000);
+  });
+}
+async function carregarServicos() {
+  const resultadosBusca = document.getElementById('resultadosBusca');
+  resultadosBusca.innerHTML = ''; // Limpa os resultados anteriores
+
+  // Simulação de uma requisição ao backend
+  const servicos = [
+    { nome: 'Jardinagem', descricao: 'Serviços de jardinagem', preco: 50 },
+    { nome: 'Consertos', descricao: 'Consertos domésticos', preco: 100 },
+  ];
+
+  servicos.forEach(servico => {
+    const servicoDiv = document.createElement('div');
+    servicoDiv.className = 'border p-4 rounded shadow';
+    servicoDiv.innerHTML = `
+      <h3 class="text-lg font-bold">${servico.nome}</h3>
+      <p class="text-gray-700">${servico.descricao}</p>
+      <p class="text-gray-700">Preço: R$ ${servico.preco}</p>
+    `;
+    resultadosBusca.appendChild(servicoDiv);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  carregarServicos();
+});
+document.addEventListener('DOMContentLoaded', function() {
+  if (verificarLogin()) {
+    const usuario = getUsuarioLogado();
+    const logoutContainer = document.createElement('div');
+    logoutContainer.className = 'flex items-center space-x-2';
+
+    const nomeSpan = document.createElement('span');
+    nomeSpan.textContent = `Olá, ${usuario.nome}`;
+
+    const logoutBtn = document.createElement('button');
+    logoutBtn.className = 'bg-red-500 text-white px-2 py-1 rounded text-sm hover:bg-red-600';
+    logoutBtn.textContent = 'Sair';
+    logoutBtn.addEventListener('click', realizarLogout);
+
+    logoutContainer.appendChild(nomeSpan);
+    logoutContainer.appendChild(logoutBtn);
+
+    const header = document.querySelector('header .container');
+    header.appendChild(logoutContainer);
+  }
+});

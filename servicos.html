@@ -17,44 +17,19 @@
          Serviços Comunitários
         </h1>
           <nav>
+         <nav>
            <ul class="flex space-x-4" id="navLinks">
-            <li>
-             <a class="hover:underline" href="index.html">
-              Início
-             </a>
-            </li>
-            <li>
-             <a class="hover:underline" href="servicos.html">
-              Serviços
-             </a>
-            </li>
-            <li id="cadastroServicosLink" class="hidden">
-             <a class="hover:underline" href="cadastrodeservicos.html">
-              Cadastro de Serviços
-             </a>
-            </li>
-            <li>
-             <a class="hover:underline" href="cadastrodeusuarios.html">
-              Cadastro de Usuários
-             </a>
-            </li>
-            <li>
-             <a class="hover:underline" href="sobre.html">
-              Sobre
-             </a>
-            </li>
-            <li>
-             <a class="hover:underline" href="contato.html">
-              Contato
-             </a>
-            </li>
-            <li id="loginLink">
-             <a class="hover:underline" href="login.html">
-              Login
-             </a>
-            </li>
+             <li><a class="hover:underline" href="index.html">Início</a></li>
+             <li><a class="hover:underline" href="servicos.html">Serviços</a></li>
+             <li id="cadastroServicosLink" class="hidden">
+               <a class="hover:underline" href="cadastrodeservicos.html">Cadastro de Serviços</a>
+             </li>
+             <li><a class="hover:underline" href="cadastrodeusuarios.html">Cadastro de Usuários</a></li>
+             <li><a class="hover:underline" href="sobre.html">Sobre</a></li>
+             <li><a class="hover:underline" href="contato.html">Contato</a></li>
+             <li id="loginLink"><a class="hover:underline" href="login.html">Login</a></li>
            </ul>
-          </nav>
+         </nav>
          </div>
   </header>
   <main class="container mx-auto p-4">
@@ -104,6 +79,11 @@
     </p>
    </div>
   </footer>
-  <script src="script.js"></script>
+       <script>
+         document.addEventListener('DOMContentLoaded', function() {
+           protegerPagina();
+         });
+       </script>
+       
  </body>
 </html>
