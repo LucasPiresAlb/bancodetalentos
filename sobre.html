@@ -54,10 +54,14 @@
     </p>
    </div>
   </footer>
-       <script>
-         document.addEventListener('DOMContentLoaded', function() {
-           protegerPagina();
-         });
-       </script>
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        atualizarInterfaceLogin();
+      }, 100);
+    });
+  </script>
  </body>
 </html>

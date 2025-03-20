@@ -79,11 +79,17 @@
     </p>
    </div>
   </footer>
-       <script>
-         document.addEventListener('DOMContentLoaded', function() {
-           protegerPagina();
-         });
-       </script>
-       
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log("Página de serviços carregada");
+      setTimeout(function() {
+        atualizarInterfaceLogin();
+        console.log("Status de login:", verificarLogin());
+      }, 100);
+    });
+  </script>
+  <script type="module" src="auth.js"></script>
  </body>
 </html>

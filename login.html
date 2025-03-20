@@ -1,36 +1,34 @@
 
+<!DOCTYPE html>
 <html lang="pt-BR">
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>
-   Plataforma de Serviços Comunitários
-     </title>
-      <script src="https://cdn.tailwindcss.com">
-      </script>
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
-     </head>
-     <body class="bg-gray-100 font-roboto">
-      <header class="bg-blue-600 text-white p-4">
-       <div class="container mx-auto flex justify-between items-center">
-        <h1 class="text-2xl font-bold">
-         Serviços Comunitários
-        </h1>
-         <nav>
-           <ul class="flex space-x-4" id="navLinks">
-             <li><a class="hover:underline" href="index.html">Início</a></li>
-             <li><a class="hover:underline" href="servicos.html">Serviços</a></li>
-             <li id="cadastroServicosLink" class="hidden">
-               <a class="hover:underline" href="cadastrodeservicos.html">Cadastro de Serviços</a>
-             </li>
-             <li><a class="hover:underline" href="cadastrodeusuarios.html">Cadastro de Usuários</a></li>
-             <li><a class="hover:underline" href="sobre.html">Sobre</a></li>
-             <li><a class="hover:underline" href="contato.html">Contato</a></li>
-             <li id="loginLink"><a class="hover:underline" href="login.html">Login</a></li>
-           </ul>
-         </nav>
-         </div>
+  <title>Login - Serviços Comunitários</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+ </head>
+ <body class="bg-gray-100 font-roboto">
+  <header class="bg-blue-600 text-white p-4">
+   <div class="container mx-auto flex justify-between items-center">
+    <h1 class="text-2xl font-bold">
+     Serviços Comunitários
+    </h1>
+    <nav>
+     <ul class="flex space-x-4" id="navLinks">
+       <li><a class="hover:underline" href="index.html">Início</a></li>
+       <li><a class="hover:underline" href="servicos.html">Serviços</a></li>
+       <li id="cadastroServicosLink" class="hidden">
+         <a class="hover:underline" href="cadastrodeservicos.html">Cadastro de Serviços</a>
+       </li>
+       <li><a class="hover:underline" href="cadastrodeusuarios.html">Cadastro de Usuários</a></li>
+       <li><a class="hover:underline" href="sobre.html">Sobre</a></li>
+       <li><a class="hover:underline" href="contato.html">Contato</a></li>
+       <li id="loginLink"><a class="hover:underline" href="login.html">Login</a></li>
+     </ul>
+    </nav>
+   </div>
   </header>
   <main class="container mx-auto p-4">
     <section class="bg-white p-6 rounded shadow-md mb-6 max-w-md mx-auto mt-8">
@@ -64,28 +62,86 @@
     </div>
   </footer>
   <script src="auth.js"></script>
-       <script src="auth.js"></script>
-       <script>
-         // Verifica login e atualiza a navegação
-         document.addEventListener('DOMContentLoaded', function() {
-           const cadastroServicosLink = document.getElementById('cadastroServicosLink');
-           const loginLink = document.getElementById('loginLink');
-
-           if (verificarLogin()) {
-             // Mostrar link de cadastro de serviços e ocultar link de login
-             cadastroServicosLink.classList.remove('hidden');
-             loginLink.classList.add('hidden');
-           } else {
-             // Ocultar link de cadastro de serviços e mostrar link de login
-             cadastroServicosLink.classList.add('hidden');
-             loginLink.classList.remove('hidden');
-           }
-         });
-       </script>
-       <script>
-         document.addEventListener('DOMContentLoaded', function() {
-           protegerPagina();
-         });
-       </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verificar se usuário já está logado
+      if (verificarLogin()) {
+        console.log("Usuário já está logado, redirecionando...");
+        window.location.href = 'index.html';
+        return;
+      }
+      
+      // Configurar o botão de login
+      const loginBtn = document.getElementById('loginBtn');
+      const loginForm = document.getElementById('loginForm');
+      const loginError = document.getElementById('loginError');
+      
+      if (loginBtn && loginForm) {
+        // Função para processar o login
+        async function processarLogin() {
+          const email = document.getElementById('email').value.trim();
+          const senha = document.getElementById('senha').value;
+          
+          // Limpar mensagens de erro anteriores
+          if (loginError) loginError.classList.add('hidden');
+          
+          // Validar campos
+          if (!email || !senha) {
+            loginError.textContent = 'Por favor, preencha todos os campos.';
+            loginError.classList.remove('hidden');
+            return;
+          }
+          
+          // Mostrar indicador de carregamento
+          loginBtn.disabled = true;
+          loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
+          
+          try {
+            console.log("Tentando fazer login com:", email);
+            // Usar a função de login da auth.js para garantir consistência
+            const resultado = await realizarLogin(email, senha);
+            
+            if (resultado) {
+              console.log("Login bem-sucedido! Redirecionando...");
+              loginBtn.innerHTML = 'Redirecionando...';
+              
+              // Verificar cookies após login
+              console.log("Verificando cookies após login:");
+              console.log("Cookie usuarioLogado:", document.cookie.includes('usuarioLogado=true'));
+              console.log("Cookies completos:", document.cookie);
+              
+              // Verificar se há um redirecionamento específico
+              const urlParams = new URLSearchParams(window.location.search);
+              const redirect = urlParams.get('redirect') || 'index.html';
+              
+              // Garantir redirecionamento
+              window.location.href = redirect;
+            } else {
+              loginError.textContent = 'Email ou senha incorretos!';
+              loginError.classList.remove('hidden');
+              loginBtn.disabled = false;
+              loginBtn.innerHTML = 'Entrar';
+            }
+          } catch (error) {
+            console.error("Erro no processo de login:", error);
+            loginError.textContent = error.message || 'Erro ao fazer login';
+            loginError.classList.remove('hidden');
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = 'Entrar';
+          }
+        }
+        
+        // Adicionar evento de clique ao botão
+        loginBtn.addEventListener('click', processarLogin);
+        
+        // Permitir login ao pressionar Enter em qualquer campo do formulário
+        loginForm.addEventListener('keyup', function(event) {
+          if (event.key === 'Enter') {
+            processarLogin();
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>

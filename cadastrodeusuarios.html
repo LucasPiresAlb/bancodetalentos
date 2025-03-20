@@ -67,14 +67,7 @@
       </div>
     </form>
    </section>
-   <section class="bg-white p-6 rounded shadow-md">
-    <h2 class="text-xl font-bold mb-4">
-     Lista de Usuários
-    </h2>
-    <div id="listaUsuarios" class="mt-4">
-      Carregando usuários...
-    </div>
-   </section>
+   <!-- Lista de usuários removida -->
   </main>
   <footer class="bg-blue-600 text-white p-4 mt-6">
    <div class="container mx-auto text-center">
@@ -105,33 +98,33 @@
           }
           
           try {
-            // Salvar usuário no localStorage
-            const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+            // Cadastrar diretamente no backend
+            const response = await fetch('/api/usuarios', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ 
+                nome, 
+                email, 
+                telefone, 
+                senha 
+              }),
+            });
             
-            // Verificar se email já existe
-            if (usuarios.some(user => user.email === email)) {
-              alert('Este email já está cadastrado!');
-              return;
+            const resultado = await response.json();
+            
+            if (!response.ok) {
+              throw new Error(resultado.error || 'Erro ao cadastrar usuário');
             }
             
-            // Adicionar novo usuário
-            const novoUsuario = { nome, email, telefone, senha };
-            usuarios.push(novoUsuario);
-            localStorage.setItem('usuarios', JSON.stringify(usuarios));
-            
-            // Cadastrar no backend também (opcional)
-            try {
-              const resultado = await cadastrarUsuario(nome, email, telefone);
-              console.log('Usuário também cadastrado no backend:', resultado);
-            } catch (error) {
-              console.error('Erro ao cadastrar no backend, mas usuário foi salvo localmente:', error);
-            }
+            console.log('Usuário cadastrado no backend:', resultado);
             
             alert('Usuário cadastrado com sucesso!');
             formCadastroUsuario.reset();
             window.location.href = 'login.html';
           } catch (error) {
-            alert('Erro ao cadastrar usuário: ' + error.message);
+            alert('Erro ao cadastrar usuário: ' + (error.message || 'Verifique se o email já está cadastrado'));
           }
         });
       }
@@ -148,12 +141,16 @@
         }
         
         try {
-          // Obter usuários do localStorage (sem as senhas)
-          const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]')
-            .map(usuario => {
-              const { senha, ...usuarioSemSenha } = usuario;
-              return usuarioSemSenha;
-            });
+          // Mostrar carregando
+          listaUsuarios.innerHTML = '<p>Carregando usuários...</p>';
+          
+          // Buscar usuários do backend
+          const response = await fetch('/api/usuarios');
+          if (!response.ok) {
+            throw new Error('Erro ao buscar usuários');
+          }
+          
+          const usuarios = await response.json();
           
           if (usuarios.length === 0) {
             listaUsuarios.innerHTML = '<p>Nenhum usuário cadastrado ainda.</p>';
@@ -184,10 +181,7 @@
         }
       }
       
-      // Carregar usuários ao abrir a página
-      if (document.getElementById('listaUsuarios')) {
-        carregarUsuarios();
-      }
+      // Lista de usuários foi removida
     });
   </script>
    <script>

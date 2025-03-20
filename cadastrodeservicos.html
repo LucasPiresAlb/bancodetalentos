@@ -31,7 +31,7 @@
          <li id="loginLink"><a class="hover:underline" href="login.html">Login</a></li>
        </ul>
      </nav>
-     </div>
+   </div>
   </header>
   <main class="container mx-auto p-4">
    <section class="bg-white p-6 rounded shadow-md mb-6">
@@ -43,7 +43,7 @@
         <label for="nome" class="block text-gray-700 font-semibold mb-2">Nome do Serviço</label>
         <input type="text" id="nome" name="nome" class="w-full p-2 border border-gray-300 rounded" required>
       </div>
-      
+
       <div class="mb-4">
         <label for="categoria" class="block text-gray-700 font-semibold mb-2">Categoria</label>
         <select id="categoria" name="categoria" class="w-full p-2 border border-gray-300 rounded" required>
@@ -55,22 +55,22 @@
           <option value="Outros">Outros</option>
         </select>
       </div>
-      
+
       <div class="mb-4">
         <label for="descricao" class="block text-gray-700 font-semibold mb-2">Descrição</label>
         <textarea id="descricao" name="descricao" rows="4" class="w-full p-2 border border-gray-300 rounded" required></textarea>
       </div>
-      
+
       <div class="mb-4">
         <label for="preco" class="block text-gray-700 font-semibold mb-2">Preço (R$)</label>
         <input type="number" id="preco" name="preco" min="0" step="0.01" class="w-full p-2 border border-gray-300 rounded" required>
       </div>
-      
+
       <div class="mb-4">
         <label for="contato" class="block text-gray-700 font-semibold mb-2">Contato</label>
         <input type="text" id="contato" name="contato" class="w-full p-2 border border-gray-300 rounded" required>
       </div>
-      
+
       <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
         Cadastrar Serviço
       </button>
@@ -87,17 +87,25 @@
   <script src="auth.js"></script>
   <script src="script.js"></script>
   <script>
-    // Proteger esta página
     document.addEventListener('DOMContentLoaded', function() {
-      if (!verificarLogin()) {
-        window.location.href = 'login.html';
-      }
+      console.log("Verificando acesso à página de cadastro de serviços");
+      
+      // Pequeno timeout para garantir que os cookies/localStorage sejam lidos corretamente
+      setTimeout(function() {
+        // Verificar se o usuário está logado
+        if (!verificarLogin()) {
+          console.log("Usuário não logado, redirecionando para login");
+          window.location.href = 'login.html?redirect=cadastrodeservicos.html';
+          return;
+        }
+        
+        console.log("Usuário logado:", getUsuarioLogado());
+        console.log("Usuário logado, mostrando página de cadastro de serviços");
+        
+        // Atualizar interface para mostrar que está logado
+        atualizarInterfaceLogin();
+      }, 200);
     });
   </script>
-   <script>
-     document.addEventListener('DOMContentLoaded', function() {
-       protegerPagina();
-     });
-   </script>
- </body>
+</body>
 </html>
